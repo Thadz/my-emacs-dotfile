@@ -28,9 +28,9 @@
   (set-frame-parameter (selected-frame) 'alpha '(100 100))
   (add-to-list 'default-frame-alist '(alpha 100 100))
   (add-to-list 'load-path "~/.emacs.d/elpa/color-theme-20080305.834/")
-  (load "~/.emacs.d/elpa/color-theme-20080305.834/themes/color-theme-molokai.el")
   (require 'color-theme)
   (setq color-theme-is-global t)
+  (load "~/.emacs.d/elpa/color-theme-20080305.834/themes/color-theme-molokai.el")
   (color-theme-molokai)
   )
 
@@ -98,6 +98,14 @@
         (buffer-substring (region-beginning) (region-end))
       (read-string "Google: ")))))
 (global-set-key (kbd "C-x g") 'google-this)
+
+;; add haskell mode
+(add-to-list 'load-path "~/.emacs.d/elpa/haskell-mode-13.7/")
+(require 'haskell-mode-autoloads)
+(add-to-list 'Info-default-directory-list "~/.emacs.d/elpa/haskell-mode-13.7/")
+(custom-set-variables
+ '(haskell-mode-hook '(turn-on-haskell-indent)))
+
 
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
