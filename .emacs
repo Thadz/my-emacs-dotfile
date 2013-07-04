@@ -1,96 +1,40 @@
-(setq user-mail-address "xxx@gmail.com")
-(setq user-website "xxx")
+;; set username and title frame
+(setq user-mail-address "zhang.t.honglin@gmail.com")
 (setq frame-title-format '("" "%b"))
 
+;; initialization configuration
+(server-start)
 (menu-bar-mode -1)
 (tool-bar-mode -1)
+(scroll-bar-mode -1)
 (column-number-mode 1)
 (global-linum-mode t)
-(global-hl-line-mode t)
-(setq scroll-error-top-bottom t)
+(global-hl-line-mode 1)
+(show-paren-mode)
+(setq-default fill-column 80)
+(setq-default auto-fill-mode 1)
+(desktop-save-mode 1)
+(mouse-avoidance-mode 'animate)
+(global-auto-revert-mode t)
+(setq-default indent-tabs-mode nil)
 
+;; turn off shell command echo
+(defun my-comint-init ()
+  (setq comint-process-echoes t))
+(add-hook 'shell-mode-hook 'my-comint-init)
+
+;; set the color theme
 (when window-system
-					;(speedbar t) ; start speedbar if we're using a window system
   (set-frame-parameter (selected-frame) 'alpha '(100 100))
   (add-to-list 'default-frame-alist '(alpha 100 100))
-  (add-to-list 'load-path "~/.emacs.d/color-theme/")
-  (load "~/.emacs.d/color-theme/themes/color-theme-molokai.el")
+  (add-to-list 'load-path "~/.emacs.d/elpa/color-theme-20080305.834/")
+  (load "~/.emacs.d/elpa/color-theme-20080305.834/themes/color-theme-molokai.el")
   (require 'color-theme)
-  (color-theme-initialize)
-					;(color-theme-robin-hood)
-  (color-theme-molokai))
+  (setq color-theme-is-global t)
+  (color-theme-molokai)
+  )
 
-(load "~/.emacs.d/ace/ace.el")
-(require 'ace-jump-mode)
-(define-key global-map (kbd "C-c SPC") 'ace-jump-mode)
-
-(add-to-list 'load-path "~/.emacs.d/cedet-1.1/common")
-(autoload 'cedet "~/.emacs.d/cedet-1.1/common/cedet.el")
-(require 'cedet)
-(add-to-list 'load-path "~/.emacs.d/jdee-2.4.0.1/lisp")
-(require 'jde)
-(add-to-list 'auto-mode-alist '("\\.java$" . jde-mode))
-(defun screen-width nil -1)
-(define-obsolete-function-alias 'make-local-hook 'ignore "21.1")
-
-(add-to-list 'load-path "~/.emacs.d/smex")
-(require 'smex)
-(smex-initialize)
-(global-set-key (kbd "M-x") 'smex)
-(global-set-key (kbd "M-X") 'smex-major-mode-commands)
-;; This is your old M-x.
-(global-set-key (kbd "C-c C-c M-x") 'execute-extended-command)
-
-(add-to-list 'load-path "~/.emacs.d/auto-complete-1.3.1")
-(require 'auto-complete)
-(global-auto-complete-mode 1)
-
-(add-to-list 'load-path "~/.emacs.d/o-blog")
-(require 'o-blog)
-
-(add-to-list 'load-path "~/.emacs.d")
-(require 'htmlize)
-
-(add-to-list 'load-path "~/.emacs.d/magit-master")
-(require 'magit)
-
-(add-to-list 'load-path "~/.emacs.d/elpa/yasnippet-0.8.0")
-(autoload 'yasnippet "yasnippet")
-					;(yas--initialize)
-					;(yas/load-directory "~/.emacs.d/elpa/yasnippet-0.8.0/snippets")
-
-(add-to-list 'load-path "~/.emacs.d/ecb-2.40")
-(require 'ecb)
-(setq ecb-tip-of-the-day nil)
-					;(setq stack-trace-on-error t)
-(mapc (lambda (mode)
-	(add-hook 'LaTeX-mode-hook mode))
-      (list ;'auto-fill-mode
-	    'LaTeX-math-mode
-	    'turn-on-reftex
-	    'linum-mode))
-(add-hook 'LaTeX-mode-hook
-	  (lambda ()
-	    (setq TeX-auto-untabify t ; remove all tabs before saving
-		  TeX-engine 'default ; (xetex) use xelatex default
-		  TeX-show-compilation t) ; display compilation windows
-	    (TeX-global-PDF-mode t) ; PDF mode enable, not plain
-	    (setq TeX-save-query nil)
-	    (imenu-add-menubar-index)
-	    ;(define-key LaTeX-mode-map (kbd "TAB") 'TeX-complete-symbol)
-	    ))
-(setq TeX-view-program-list
-      '(("evince" "evince %o")))
-(setq TeX-view-program-selection
-      '((output-pdf "evince")
-	(output-dvi "evince")))
-(setq TeX-insert-quote t)
-(ispell-change-dictionary "american" t)
-(setq-default ispell-program-name "aspell") 
-(add-hook 'LaTeX-mode-hook 'flyspell-mode)
-
-(add-hook 'doc-view-mode-hook 'auto-revert-mode)
-
+;; set the mouse scroll
 (defun smooth-scroll (increment)
   (scroll-up increment) (sit-for 0.05)
   (scroll-up increment) (sit-for 0.02)
@@ -99,73 +43,76 @@
   (scroll-up increment) (sit-for 0.06)
   (scroll-up increment))
 
-(global-set-key (kbd "<C-mouse-4>") 'text-scale-increase)
-(global-set-key (kbd "<C-mouse-5>") 'text-scale-decrease)
+;; set ido to help choose files
+(require 'ido)
+(setq ido-enable-flex-matching t)
+(setq ido-everywhere t)
+(ido-mode 1)
 
-(global-set-key [(mouse-5)] '(lambda () (interactive) (smooth-scroll 1)))
-(global-set-key [(mouse-4)] '(lambda () (interactive) (smooth-scroll -1)))
+;; an advanced "ido" to help choose functions
+(add-to-list 'load-path "~/.emacs.d/smex")
+(require 'smex)
+(smex-initialize)
+(global-set-key (kbd "M-x") 'smex)
+(global-set-key (kbd "M-X") 'smex-major-mode-commands)
+(global-set-key (kbd "C-c C-c M-x") 'execute-extended-command)
 
-					;(split-window-vertically) 
-					;(split-window-horizontally)
+;; set emacs-git plugin
+(add-to-list 'load-path "~/.emacs.d/elpa/magit-20130624.2315/")
+(require 'magit)
+
+;; set the auto completion
+(add-to-list 'load-path "~/.emacs.d/elpa/popup-20130324.1305/")
+(require 'popup)
+(add-to-list 'load-path "~/.emacs.d/elpa/auto-complete-20130503.2013/")
+(require 'auto-complete-config)
+(add-to-list 'ac-dictionary-directories "~/.emacs.d/elpa/auto-complete-20130503.2013/dict")
+(ac-config-default)
+
+;; set highlight indentation
+(add-to-list 'load-path "~/.emacs.d/highlight-indentation/")
+(require 'highlight-indentation)
+(set-face-background 'highlight-indentation-face "#465457")
+(set-face-background 'highlight-indentation-current-column-face "#465457")
+
+;; set the indentation to two spaces for java mode
+(add-hook 'java-mode-hook (lambda () (setq c-basic-offset 2)))
+
+;; scroll smoothly
+(setq scroll-step 1 scroll-conservatively 10000)
+
+;; highlight todos
+(defun hilite-todos()
+  (highlight-lines-matching-regexp "\\<\\(FIXME\\|WRITEME\\|WRITEME!\\|TODO\\|BUG\\):?" 'hi-red-b)
+  )
+
+
+;; search for google results
+(defun google-this ()
+  "Googles a query or region if any"
+  (interative)
+  (browse-url
+   (concat
+    "http://www.google.com/search?ie=utf-8&oe=utf-8&q="
+    (if mark-active
+        (buffer-substring (region-beginning) (region-end))
+      (read-string "Google: ")))))
+(global-set-key (kbd "C-x g") 'google-this)
+
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
+ '(ansi-color-names-vector ["dark gray" "red" "green" "yellow" "deep sky blue" "magenta" "cyan" "white"])
  '(column-number-mode t)
- '(doc-view-continuous t)
- '(ecb-options-version "2.40")
- '(inhibit-startup-screen t)
- '(jde-enable-abbrev-mode t)
- '(jde-javadoc-describe-method-template "\"* \" (jde-javadoc-code name)")
- '(jde-jdk (quote ("1.6.0")))
- '(jde-jdk-registry (quote (("1.6.0" . "/usr/local/jdk1.7.0_09"))))
- '(jde-junit-working-directory "/usr/local/jdk1.7.0_09/")
- '(jde-sourcepath (quote ("~/workspace")))
+ '(font-use-system-font t)
  '(show-paren-mode t)
- '(tempo-interactive t)
- '(text-mode-hook (quote (text-mode-hook-identify)))
  '(tool-bar-mode nil)
- '(uniquify-buffer-name-style (quote forward) nil (uniquify))
- '(yas-snippet-dirs (quote ("/home/zhang/.emacs.d/elpa/yasnippet-0.8.0/snippets")) nil (yasnippet)))
+ '(uniquify-buffer-name-style (quote forward) nil (uniquify)))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- '(default ((t (:family "Mensch" :foundry "bitstream" :slant normal :weight normal :height 113 :width normal)))))
-
-(require 'org-install)
-(add-to-list 'auto-mode-alist '("\\.org$" . org-mode))
-;;(define-key global-map "\C-cl" 'org-store-link)
-;;(define-key global-map "\C-ca" 'org-agenda)
-(setq org-log-done t)
-
-;; (add-to-list 'load-path "~/.emacs.d/flymake-cursor")
-;; (require 'flymake-cursor)
-;; (add-hook 'find-file-hooks 'flymake-find-file-hook)
-;; (custom-set-variables
-;;      '(help-at-pt-timer-delay 0.9)
-;;      '(help-at-pt-display-when-idle '(flymake-overlay)))
-;; (define-key global-map "\C-c\C-f" 'flymake-goto-next-error)
-
-(add-to-list 'load-path "~/.emacs.d/clojure-mode/")
-(autoload 'clojure-mode "clojure-mode" "A major mode for Clojure" t)
-(add-to-list 'auto-mode-alist '("\\.clj$" . clojure-mode))
-
-(add-to-list
- 'auto-mode-alist
- '("\\.m$" . octave-mode))
-
-(setq ido-enable-flex-matching t)
-(setq ido-everywhere t)
-(ido-mode 1)
-
-(desktop-save-mode 1)
-
-(mouse-avoidance-mode 'animate)
-
-(global-auto-revert-mode t)
-
-;; (setq scroll-margin 3
-;;       scroll-conservatively 10000)
+ '(default ((t (:family "Ubuntu Mono" :foundry "unknown" :slant normal :weight normal :height 128 :width normal)))))
