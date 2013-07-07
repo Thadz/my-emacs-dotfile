@@ -3,7 +3,6 @@
 (setq frame-title-format '("" "%b"))
 
 ;; initialization configuration
-(server-start)
 (menu-bar-mode -1)
 (tool-bar-mode -1)
 (scroll-bar-mode -1)
@@ -13,7 +12,6 @@
 (show-paren-mode)
 (setq-default fill-column 80)
 (setq-default auto-fill-mode 1)
-(desktop-save-mode 1)
 (mouse-avoidance-mode 'animate)
 (global-auto-revert-mode t)
 (setq-default indent-tabs-mode nil)
@@ -25,8 +23,10 @@
 
 ;; set the color theme
 (when window-system
-  (set-frame-parameter (selected-frame) 'alpha '(100 100))
-  (add-to-list 'default-frame-alist '(alpha 100 100))
+  ;; (set-frame-parameter (selected-frame) 'alpha '(100 100))
+  ;; (add-to-list 'default-frame-alist '(alpha 100 100))
+  (server-start)
+  (desktop-save-mode 1)
   (add-to-list 'load-path "~/.emacs.d/elpa/color-theme-20080305.834/")
   (require 'color-theme)
   (setq color-theme-is-global t)
@@ -104,10 +104,6 @@
 (require 'haskell-mode-autoloads)
 (add-to-list 'Info-default-directory-list "~/.emacs.d/elpa/haskell-mode-13.7/")
 (custom-set-variables
- '(haskell-mode-hook '(turn-on-haskell-indent)))
-
-
-(custom-set-variables
  ;; custom-set-variables was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
@@ -115,9 +111,15 @@
  '(ansi-color-names-vector ["dark gray" "red" "green" "yellow" "deep sky blue" "magenta" "cyan" "white"])
  '(column-number-mode t)
  '(font-use-system-font t)
+ '(haskell-mode-hook (quote (turn-on-haskell-indent)))
+ '(inhibit-startup-screen t)
+ '(send-mail-function (quote mailclient-send-it))
  '(show-paren-mode t)
  '(tool-bar-mode nil)
  '(uniquify-buffer-name-style (quote forward) nil (uniquify)))
+
+
+
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
