@@ -2,7 +2,7 @@
 ;; --------------------------------------------------------------------------
 ;; Desktop File for Emacs
 ;; --------------------------------------------------------------------------
-;; Created Fri Sep 13 12:41:28 2013
+;; Created Fri Sep 20 23:17:44 2013
 ;; Desktop file format version 206
 ;; Emacs version 24.3.1
 
@@ -10,9 +10,31 @@
 (setq desktop-missing-file-warning nil)
 (setq tags-file-name nil)
 (setq tags-table-list nil)
-(setq search-ring '("bowlingTest4" "bowling" "takeW" "t2d" "bowlingTests" "information" "mich" "first arran" "arrange the women" "the information" "k" "based on the con" "formula" "one-to" "the conclusion from" "aux"))
+(setq search-ring '("foldTree" "map2Tr" "map2" "fold" "co" "map2" "fold" "map2Tre" "calc" "minSize" "circle" "map" "bowlingTest4" "bowling" "takeW" "t2d"))
 (setq regexp-search-ring '("amend"))
 (setq register-alist nil)
-(setq file-name-history '("/home/zhang/Documents/chman-cis552/a1/Main.hs" "/home/zhang/Documents/cis520-ML/homework-1/hw1_honglinz.tex" "/home/zhang/Documents/chman-cis552/a1/Main.hs" "/home/zhang/Documents/cis552-haskell/homework-1/Main.hs" "/home/zhang/Documents/cis520-ML/homework-1/hw1_honglinz.tex" "/home/zhang/Documents/cis520-ML/homework-1/hw1_template.tex" "/home/zhang/Documents/cit592-solution/homework-2/hw1-solution.tex" "/home/zhang/Documents/cis520-ML/homework-1/hw1_template.tex" "/home/zhang/Documents/cis520-ML/homework-1/hw1.tex" "/home/zhang/Documents/cis552-haskell/homework-1/Main.hs" "/home/zhang/Documents/cit592-solution/homework-2/hw1-solution.tex" "/home/zhang/Documents/cis552-haskell/homework-1/makefile" "/home/zhang/Documents/cis552-haskell/homework-1/Main.hs" "/home/zhang/.emacs" "/home/zhang/Documents/github-docs/my-resume-public/friggeri-cv.cls" "/home/zhang/.emacs" "/home/zhang/Documents/cis552-haskell/homework-0/Lec1.lhs" "/home/zhang/Documents/cis520-ML/homework-1/hw1_template.tex" "/home/zhang/Documents/cis550-codd" "/home/zhang/Documents/honglinz-cis552/.gitignore" "/home/zhang/Documents/honglinz-cis552/Lec1.lhs" "/home/zhang/.ssh/id_rsa.pub" "/home/zhang/Workspace/LeetCode/TwoSum/src/Solution.java" "/home/zhang/Workspace/Solution.java" "/home/zhang/Workspace/LeetCode/TwoSum/src/Solution.java" "/home/zhang/Workspace/LeetCode/TwoSum/src/SolutionTest.java" "/home/zhang/Workspace/LeetCode/TwoSum.java" "/home/zhang/Workspace/LeetCode" "/home/zhang/Documents/my-resume-public/honglinz-resume.tex" "/home/zhang/Downloads/my-resume-public/honglinz-resume.tex"))
+(setq file-name-history '("/home/zhang/Documents/cit592-solution/homework-4/hw4-solution.tex" "/home/zhang/Documents/orren-cis520/cis520_hw2/generate_knn_plots.m" "/home/zhang/Documents/cis520-ML/homework-1/hw1_honglinz.tex" "/home/zhang/Documents/cit592-solution/homework-2/hw2-solution.tex" "/home/zhang/Documents/cit592-solution/homework-4/hw2-solution.tex" "/home/zhang/Documents/cis550-database/homework-1/hw1-1f.sql" "/home/zhang/Documents/cis550-database/homework-1/hw1-1e.sql" "/home/zhang/Documents/cis550-database/homework-1/hw1-1d.sql" "/home/zhang/Documents/cis550-database/homework-1/hw1-1c.sql" "/home/zhang/Documents/cis550-database/homework-1/hw1-1b.sql" "/home/zhang/Documents/cis550-database/homework-1/drop_table.sql" "/home/zhang/Documents/cis550-database/homework-1/hw1-1a.sql" "/home/zhang/Documents/cis550-database/homework-1/hw1-3.txt" "/home/zhang/Documents/cis550-database/homework-1/hw1-3a.sql" "/home/zhang/Documents/cis550-database/homework-1/hw1-1f.sql" "/home/zhang/Documents/chman-cis552/a2/Main.hs" "/home/zhang/Documents/orren-cis520/cis520_hw2/generate_dt_plots.m" "/home/zhang/Documents/cis550-database/homework-1/hw1-1d.sql" "/home/zhang/Documents/orren-cis520/cis520_hw2/dt_train_multi.m" "/home/zhang/Documents/orren-cis520/cis520_hw2/generate_knn_plots.m" "/home/zhang/Documents/orren-cis520/cis520_hw2/dt_choose_feature_multi.m" "/home/zhang/Documents/orren-cis520/cis520_hw2/dt_train.m" "/home/zhang/Documents/orren-cis520/cis520_hw2/make_xval_partition.m" "/home/zhang/Documents/orren-cis520/cis520_hw2/generate_knn_plots.m" "/home/zhang/Documents/orren-cis520/cis520_hw2/dt_train_multi.m" "/home/zhang/Documents/orren-cis520/cis520_hw2/knn_xval_error.m" "/home/zhang/Documents/orren-cis520/cis520_hw2/dt_train_multi.m" "/home/zhang/Documents/orren-cis520/cis520_hw2/dt_choose_feature.m" "/home/zhang/Documents/orren-cis520/cis520_hw2/dt_choose_feature_multi.m" "/home/zhang/Documents/orren-cis520/cis520_hw2/multi_entropy.m"))
 
 ;; Buffer section -- buffers listed in same order as in buffer list:
+(desktop-create-buffer 206
+  "/home/zhang/Documents/cit592-solution/homework-4/hw4-solution.tex"
+  "hw4-solution.tex"
+  'latex-mode
+  '(linum-mode global-auto-revert-mode global-whitespace-mode TeX-PDF-mode flyspell-mode reftex-mode)
+  6181
+  '(5763 nil)
+  nil
+  nil
+  '((indent-tabs-mode) (buffer-file-coding-system . undecided-unix)))
+
+(desktop-create-buffer 206
+  "/home/zhang/Documents/cit592-solution/homework-4/TeX Live 2013"
+  "TeX Live 2013"
+  'latex-mode
+  '(linum-mode global-auto-revert-mode global-whitespace-mode TeX-PDF-mode flyspell-mode reftex-mode)
+  1
+  '(1 nil)
+  nil
+  nil
+  '((indent-tabs-mode)))
+
