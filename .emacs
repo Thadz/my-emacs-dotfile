@@ -22,17 +22,44 @@
 (add-hook 'shell-mode-hook 'my-comint-init)
 
 ;; set the color theme
+(add-to-list 'load-path "~/.emacs.d/elpa/color-theme-20080305.834/")
+(require 'color-theme)
+(setq color-theme-is-global t)
+(load "~/.emacs.d/elpa/color-theme-20080305.834/themes/color-theme-molokai.el")
+(color-theme-molokai)
 (when window-system
   ;; (set-frame-parameter (selected-frame) 'alpha '(100 100))
   ;; (add-to-list 'default-frame-alist '(alpha 100 100))
   (server-start)
   (desktop-save-mode 1)
-  (add-to-list 'load-path "~/.emacs.d/elpa/color-theme-20080305.834/")
-  (require 'color-theme)
-  (setq color-theme-is-global t)
-  (load "~/.emacs.d/elpa/color-theme-20080305.834/themes/color-theme-molokai.el")
-  (color-theme-molokai)
   )
+
+(mapc (lambda (mode)
+        (add-hook 'LaTeX-mode-hook mode))
+      (list ;'auto-fill-mode
+       'LaTeX-math-mode
+       'turn-on-reftex))
+(add-hook 'LaTeX-mode-hook
+          (lambda ()
+            (setq TeX-auto-untabify t ; remove all tabs before saving
+                  TeX-engine 'xetex ; ('xetex) | ('default)
+                  TeX-show-compilation t) ; display compilation windows
+            (TeX-global-PDF-mode t) ; PDF mode enable, not plain
+            (setq TeX-save-query nil)
+            (imenu-add-menubar-index)
+           ;(define-key LaTeX-mode-map (kbd "TAB") 'TeX-complete-symbol)
+            ))
+(setq TeX-view-program-list
+      '(("evince" "evince %o")))
+(setq TeX-view-program-selection
+      '((output-pdf "evince")
+        (output-dvi "evince")))
+(setq TeX-insert-quote t)
+(ispell-change-dictionary "american" t)
+(setq-default ispell-program-name "aspell")
+(add-hook 'LaTeX-mode-hook 'flyspell-mode)
+
+(add-hook 'doc-view-mode-hook 'auto-revert-mode)
 
 ;; set the mouse scroll
 (defun smooth-scroll (increment)
@@ -66,7 +93,8 @@
 (require 'popup)
 (add-to-list 'load-path "~/.emacs.d/elpa/auto-complete-20130503.2013/")
 (require 'auto-complete-config)
-(add-to-list 'ac-dictionary-directories "~/.emacs.d/elpa/auto-complete-20130503.2013/dict")
+(add-to-list 'ac-dictionary-directories
+             "~/.emacs.d/elpa/auto-complete-20130503.2013/dict")
 (ac-config-default)
 
 ;; set highlight indentation
@@ -83,7 +111,8 @@
 
 ;; highlight todos
 (defun hilite-todos()
-  (highlight-lines-matching-regexp "\\<\\(FIXME\\|WRITEME\\|WRITEME!\\|TODO\\|BUG\\):?" 'hi-red-b)
+  (highlight-lines-matching-regexp
+   "\\<\\(FIXME\\|WRITEME\\|WRITEME!\\|TODO\\|BUG\\):?" 'hi-red-b)
   )
 
 
@@ -103,12 +132,25 @@
 (add-to-list 'load-path "~/.emacs.d/elpa/haskell-mode-13.7/")
 (require 'haskell-mode-autoloads)
 (add-to-list 'Info-default-directory-list "~/.emacs.d/elpa/haskell-mode-13.7/")
+
+;; add octave-mode
+(autoload 'octave-mode "octave-mod" nil t)
+          (setq auto-mode-alist
+                (cons '("\\.m$" . octave-mode) auto-mode-alist))
+(add-hook 'octave-mode-hook
+                    (lambda ()
+                      (abbrev-mode 1)
+                      (auto-fill-mode 1)
+                      (if (eq window-system 'x)
+                          (font-lock-mode 1))))
+
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- '(ansi-color-names-vector ["dark gray" "red" "green" "yellow" "deep sky blue" "magenta" "cyan" "white"])
+ '(ansi-color-names-vector ["dark gray" "red" "green" "yellow" "deep sky blue"
+                            "magenta" "cyan" "white"])
  '(column-number-mode t)
  '(font-use-system-font t)
  '(haskell-mode-hook (quote (turn-on-haskell-indent)))
@@ -118,6 +160,9 @@
  '(tool-bar-mode nil)
  '(uniquify-buffer-name-style (quote forward) nil (uniquify)))
 
+(require 'whitespace)
+(setq whitespace-style '(face empty tabs lines-tail trailing))
+(global-whitespace-mode t)
 
 
 (custom-set-faces
@@ -125,4 +170,5 @@
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- '(default ((t (:family "Ubuntu Mono" :foundry "unknown" :slant normal :weight normal :height 128 :width normal)))))
+ '(default ((t (:family "Ubuntu Mono" :foundry "unknown" :slant normal
+                        :weight normal :height 128 :width normal)))))
