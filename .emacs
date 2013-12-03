@@ -1,4 +1,4 @@
-;; set username and title frame
+; set username and title frame
 (setq user-mail-address "zhang.t.honglin@gmail.com")
 (setq frame-title-format '("" "%b"))
 
@@ -22,10 +22,10 @@
 (add-hook 'shell-mode-hook 'my-comint-init)
 
 ;; set the color theme
-(add-to-list 'load-path "~/.emacs.d/elpa/color-theme-20080305.834/")
+(add-to-list 'load-path "~/.emacs.d/elpa/color-theme/")
 (require 'color-theme)
 (setq color-theme-is-global t)
-(load "~/.emacs.d/elpa/color-theme-20080305.834/themes/color-theme-molokai.el")
+(load "~/.emacs.d/elpa/color-theme/themes/color-theme-molokai.el")
 (color-theme-molokai)
 (when window-system
   ;; (set-frame-parameter (selected-frame) 'alpha '(100 100))
@@ -42,11 +42,12 @@
 (add-hook 'LaTeX-mode-hook
           (lambda ()
             (setq TeX-auto-untabify t ; remove all tabs before saving
-                  TeX-engine 'xetex ; ('xetex) | ('default)
+                  TeX-engine 'default ; ('xetex) | ('default)
                   TeX-show-compilation t) ; display compilation windows
             (TeX-global-PDF-mode t) ; PDF mode enable, not plain
             (setq TeX-save-query nil)
             (imenu-add-menubar-index)
+            (setq Tex-source-correlate-mode t)
            ;(define-key LaTeX-mode-map (kbd "TAB") 'TeX-complete-symbol)
             ))
 (setq TeX-view-program-list
@@ -85,16 +86,18 @@
 (global-set-key (kbd "C-c C-c M-x") 'execute-extended-command)
 
 ;; set emacs-git plugin
-(add-to-list 'load-path "~/.emacs.d/elpa/magit-20130624.2315/")
+(add-to-list 'load-path "~/.emacs.d/elpa/magit/")
+(add-to-list 'load-path "~/.emacs.d/elpa/git-commit-mode-20131124.2132/")
+(add-to-list 'load-path "~/.emacs.d/elpa/git-rebase-mode-20131005.1730/")
 (require 'magit)
 
 ;; set the auto completion
-(add-to-list 'load-path "~/.emacs.d/elpa/popup-20130324.1305/")
+(add-to-list 'load-path "~/.emacs.d/elpa/popup/")
 (require 'popup)
-(add-to-list 'load-path "~/.emacs.d/elpa/auto-complete-20130503.2013/")
+(add-to-list 'load-path "~/.emacs.d/elpa/auto-complete/")
 (require 'auto-complete-config)
 (add-to-list 'ac-dictionary-directories
-             "~/.emacs.d/elpa/auto-complete-20130503.2013/dict")
+             "~/.emacs.d/elpa/auto-complete/dict")
 (ac-config-default)
 
 ;; set highlight indentation
@@ -111,27 +114,47 @@
 
 ;; highlight todos
 (defun hilite-todos()
+  (interactive)
   (highlight-lines-matching-regexp
    "\\<\\(FIXME\\|WRITEME\\|WRITEME!\\|TODO\\|BUG\\):?" 'hi-red-b)
   )
 
+;; add xquery mode
+(add-to-list 'load-path "~/.emacs.d/xquery-mode/")
+(require 'xquery-mode)
+
+;; add web mode
+(add-to-list 'load-path "~/.emacs.d/elpa/web-mode/")
+(require 'web-mode)
+(add-to-list 'auto-mode-alist '("\\.phtml\\'" . web-mode))
+(add-to-list 'auto-mode-alist '("\\.tpl\\.php\\'" . web-mode))
+(add-to-list 'auto-mode-alist '("\\.jsp\\'" . web-mode))
+(add-to-list 'auto-mode-alist '("\\.as[cp]x\\'" . web-mode))
+(add-to-list 'auto-mode-alist '("\\.erb\\'" . web-mode))
+(add-to-list 'auto-mode-alist '("\\.mustache\\'" . web-mode))
+(add-to-list 'auto-mode-alist '("\\.djhtml\\'" . web-mode))
+(add-to-list 'auto-mode-alist '("\\.html?\\'" . web-mode))
+
+;; add js2 mode for javascript
+(add-to-list 'load-path "~/.emacs.d/elpa/js2-mode/")
+(require 'js2-mode)
+(add-to-list 'auto-mode-alist '("\\.js\\'" . js2-mode))
+(add-to-list 'interpreter-mode-alist '("node" . js2-mode))
+
+;; add json mode
+(add-to-list 'load-path "~/.emacs.d/elpa/json-mode/")
+(require 'json-mode)
 
 ;; search for google results
-(defun google-this ()
-  "Googles a query or region if any"
-  (interative)
-  (browse-url
-   (concat
-    "http://www.google.com/search?ie=utf-8&oe=utf-8&q="
-    (if mark-active
-        (buffer-substring (region-beginning) (region-end))
-      (read-string "Google: ")))))
-(global-set-key (kbd "C-x g") 'google-this)
+(add-to-list 'load-path "~/.emacs.d/google-this/")
+(require 'google-this)
+(google-this-mode 1)
 
 ;; add haskell mode
-(add-to-list 'load-path "~/.emacs.d/elpa/haskell-mode-13.7/")
+(add-to-list 'load-path "~/.emacs.d/elpa/haskell-mode-20131129.1536/")
 (require 'haskell-mode-autoloads)
-(add-to-list 'Info-default-directory-list "~/.emacs.d/elpa/haskell-mode-13.7/")
+(add-to-list 'Info-default-directory-list
+             "~/.emacs.d/elpa/haskell-mode-20131129.1536/")
 
 ;; add octave-mode
 (autoload 'octave-mode "octave-mod" nil t)
@@ -149,8 +172,15 @@
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- '(ansi-color-names-vector ["dark gray" "red" "green" "yellow" "deep sky blue"
-                            "magenta" "cyan" "white"])
+ '(ansi-color-names-vector [
+                            "dark gray"
+                            "red"
+                            "green"
+                            "yellow"
+                            "deep sky blue"
+                            "magenta"
+                            "cyan"
+                            "white"])
  '(column-number-mode t)
  '(font-use-system-font t)
  '(haskell-mode-hook (quote (turn-on-haskell-indent)))
@@ -164,11 +194,15 @@
 (setq whitespace-style '(face empty tabs lines-tail trailing))
 (global-whitespace-mode t)
 
-
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- '(default ((t (:family "Ubuntu Mono" :foundry "unknown" :slant normal
-                        :weight normal :height 128 :width normal)))))
+ '(default ((t (
+                :family "Ubuntu Mono"
+                        :foundry "unknown"
+                        :slant normal
+                        :weight normal
+                        :height 128
+                        :width normal)))))
