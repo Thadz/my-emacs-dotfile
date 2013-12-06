@@ -16,6 +16,8 @@
 (global-auto-revert-mode t)
 (setq-default indent-tabs-mode nil)
 
+(setenv "PATH" (getenv "PATH"))
+
 ;; turn off shell command echo
 (defun my-comint-init ()
   (setq comint-process-echoes t))
@@ -119,9 +121,26 @@
    "\\<\\(FIXME\\|WRITEME\\|WRITEME!\\|TODO\\|BUG\\):?" 'hi-red-b)
   )
 
+;; add elscreen mode
+(add-to-list 'load-path "~/.emacs.d/elpa/elscreen/")
+(require 'elscreen)
+(elscreen-start)
+
+;; add simple httpd
+;; (add-to-list 'load-path "~/.emacs.d/elpa/simple-httpd/")
+;; (require 'simple-httpd)
+;; (setq httpd-root "/var/www")
+;; (httpd-start)
+
 ;; add xquery mode
 (add-to-list 'load-path "~/.emacs.d/xquery-mode/")
 (require 'xquery-mode)
+
+;; add skewer-mode
+;; (add-to-list 'load-path "~/.emacs.d/elpa/skewer-mode/")
+;; (add-hook 'js2-mode-hook 'skewer-mode)
+;; (add-hook 'css-mode-hook 'skewer-css-mode)
+;; (add-hook 'html-mode-hook 'skewer-html-mode)
 
 ;; add web mode
 (add-to-list 'load-path "~/.emacs.d/elpa/web-mode/")
@@ -144,6 +163,27 @@
 ;; add json mode
 (add-to-list 'load-path "~/.emacs.d/elpa/json-mode/")
 (require 'json-mode)
+(defun flymake-jade-init ()
+  (let* ((temp-file (flymake-init-create-temp-buffer-copy
+                 'flymake-create-temp-intemp))
+     (local-file (file-relative-name
+                  temp-file
+                  (file-name-directory buffer-file-name)))
+     (arglist (list local-file)))
+    (list "jade" arglist)))
+(setq flymake-err-line-patterns
+       (cons '("\\(.*\\): \\(.+\\):\\([[:digit:]]+\\)$"
+              2 3 nil 1)
+            flymake-err-line-patterns))
+(add-to-list 'flymake-allowed-file-name-masks
+         '("\\.jade\\'" flymake-jade-init))
+
+;; add jade mode
+(add-to-list 'load-path "~/.emacs.d/jade-mode")
+(require 'sws-mode)
+(require 'jade-mode)
+(add-to-list 'auto-mode-alist '("\\.styl$" . sws-mode))
+(add-to-list 'auto-mode-alist '("\\.jade$" . jade-mode))
 
 ;; search for google results
 (add-to-list 'load-path "~/.emacs.d/google-this/")
@@ -155,6 +195,10 @@
 (require 'haskell-mode-autoloads)
 (add-to-list 'Info-default-directory-list
              "~/.emacs.d/elpa/haskell-mode-20131129.1536/")
+
+;; add melpa package list
+;; (add-to-list 'package-archives
+;;              '("melpa" . "http://melpa.milkbox.net/packages/") t)
 
 ;; add octave-mode
 (autoload 'octave-mode "octave-mod" nil t)
