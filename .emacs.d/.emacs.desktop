@@ -1,0 +1,29 @@
+;; -*- mode: emacs-lisp; coding: emacs-mule; -*-
+;; --------------------------------------------------------------------------
+;; Desktop File for Emacs
+;; --------------------------------------------------------------------------
+;; Created Sun Mar 16 19:07:55 2014
+;; Desktop file format version 206
+;; Emacs version 24.3.1
+
+;; Global section:
+(setq desktop-missing-file-warning nil)
+(setq tags-file-name nil)
+(setq tags-table-list nil)
+(setq search-ring nil)
+(setq regexp-search-ring nil)
+(setq register-alist nil)
+(setq file-name-history '("/etc/X11/xorg.conf.d/99-synaptics-t440s.conf" "/home/zhang/.gitconfig" "/home/zhang/Documents/git-repos/phi-mu-lambda/_posts/2014-03-16-Install-Ubuntu-On-T440s.md" "/home/zhang/.oh-my-zsh/themes/bira.zsh-theme" "/home/zhang/.zshrc" "/home/zhang/Documents/git-repos/phi-mu-lambda/_posts/2014-03-16-Install-Ubuntu-On-T440s.md" "/home/zhang/Documents/git-repos/phi-mu-lambda/_post.txt" "/home/zhang/Documents/git-repos/ducking-computing-machine/src/add_two_numbers/ListNode.java"))
+
+;; Buffer section -- buffers listed in same order as in buffer list:
+(desktop-create-buffer 206
+  "/home/zhang/Documents/git-repos/phi-mu-lambda/_posts/2014-03-16-Install-Ubuntu-On-T440s.md"
+  "2014-03-16-Install-Ubuntu-On-T440s.md"
+  'fundamental-mode
+  '(linum-mode global-auto-revert-mode google-this-mode global-whitespace-mode)
+  3933
+  '(2675 nil)
+  nil
+  nil
+  '((buffer-file-coding-system . undecided-unix)))
+
