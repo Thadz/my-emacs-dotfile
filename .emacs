@@ -16,7 +16,12 @@
 (global-auto-revert-mode t)
 (setq-default indent-tabs-mode nil)
 
-(setenv "PATH" (getenv "PATH"))
+(let ((path (shell-command-to-string ". ~/.zshrc; echo -n $PATH")))
+  (setenv "PATH" path)
+  (setq exec-path
+        (append
+         (split-string-and-unquote path ":")
+         exec-path)))
 
 ;; turn off shell command echo
 (defun my-comint-init ()
