@@ -16,13 +16,6 @@
 (global-auto-revert-mode t)
 (setq-default indent-tabs-mode nil)
 
-(let ((path (shell-command-to-string ". ~/.zshrc; echo -n $PATH")))
-  (setenv "PATH" path)
-  (setq exec-path
-        (append
-         (split-string-and-unquote path ":")
-         exec-path)))
-
 ;; turn off shell command echo
 (defun my-comint-init ()
   (setq comint-process-echoes t))
@@ -41,6 +34,7 @@
   (desktop-save-mode 1)
   )
 
+;; LaTeX settings
 (mapc (lambda (mode)
         (add-hook 'LaTeX-mode-hook mode))
       (list ;'auto-fill-mode
@@ -126,44 +120,6 @@
    "\\<\\(FIXME\\|WRITEME\\|WRITEME!\\|TODO\\|BUG\\):?" 'hi-red-b)
   )
 
-;; add web mode
-(add-to-list 'load-path "~/.emacs.d/elpa/web-mode/")
-(require 'web-mode)
-(add-to-list 'auto-mode-alist '("\\.phtml\\'" . web-mode))
-(add-to-list 'auto-mode-alist '("\\.tpl\\.php\\'" . web-mode))
-(add-to-list 'auto-mode-alist '("\\.jsp\\'" . web-mode))
-(add-to-list 'auto-mode-alist '("\\.as[cp]x\\'" . web-mode))
-(add-to-list 'auto-mode-alist '("\\.erb\\'" . web-mode))
-(add-to-list 'auto-mode-alist '("\\.mustache\\'" . web-mode))
-(add-to-list 'auto-mode-alist '("\\.djhtml\\'" . web-mode))
-(add-to-list 'auto-mode-alist '("\\.html?\\'" . web-mode))
-
-;; search for google results
-(add-to-list 'load-path "~/.emacs.d/google-this/")
-(require 'google-this)
-(google-this-mode 1)
-
-;; add haskell mode
-(add-to-list 'load-path "~/.emacs.d/elpa/haskell-mode-20131129.1536/")
-(require 'haskell-mode-autoloads)
-(add-to-list 'Info-default-directory-list
-             "~/.emacs.d/elpa/haskell-mode-20131129.1536/")
-
-;; add melpa package list
-;; (add-to-list 'package-archives
-;;              '("melpa" . "http://melpa.milkbox.net/packages/") t)
-
-;; add octave-mode
-(autoload 'octave-mode "octave-mod" nil t)
-          (setq auto-mode-alist
-                (cons '("\\.m$" . octave-mode) auto-mode-alist))
-(add-hook 'octave-mode-hook
-                    (lambda ()
-                      (abbrev-mode 1)
-                      (auto-fill-mode 1)
-                      (if (eq window-system 'x)
-                          (font-lock-mode 1))))
-
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
@@ -203,3 +159,16 @@
                         :weight normal
                         :height 128
                         :width normal)))))
+
+(custom-set-variables
+ ;; custom-set-variables was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ '(inhibit-startup-screen t))
+(custom-set-faces
+ ;; custom-set-faces was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ )
