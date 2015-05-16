@@ -27,6 +27,7 @@
 (setq color-theme-is-global t)
 (load "~/.emacs.d/elpa/color-theme/themes/color-theme-molokai.el")
 (color-theme-molokai)
+
 (when window-system
   ;; (set-frame-parameter (selected-frame) 'alpha '(100 100))
   ;; (add-to-list 'default-frame-alist '(alpha 100 100))
@@ -79,18 +80,18 @@
 (ido-mode 1)
 
 ;; an advanced "ido" to help choose functions
-(add-to-list 'load-path "~/.emacs.d/smex")
+(add-to-list 'load-path "~/.emacs.d/elpa/smex")
 (require 'smex)
 (smex-initialize)
 (global-set-key (kbd "M-x") 'smex)
 (global-set-key (kbd "M-X") 'smex-major-mode-commands)
 (global-set-key (kbd "C-c C-c M-x") 'execute-extended-command)
 
-;; set emacs-git plugin
-(add-to-list 'load-path "~/.emacs.d/elpa/magit/")
-(add-to-list 'load-path "~/.emacs.d/elpa/git-commit-mode-20131124.2132/")
-(add-to-list 'load-path "~/.emacs.d/elpa/git-rebase-mode-20131005.1730/")
-(require 'magit)
+;; ;; set emacs-git plugin
+;; (add-to-list 'load-path "~/.emacs.d/elpa/magit/")
+;; (add-to-list 'load-path "~/.emacs.d/elpa/git-commit-mode-20131124.2132/")
+;; (add-to-list 'load-path "~/.emacs.d/elpa/git-rebase-mode-20131005.1730/")
+;; (require 'magit)
 
 ;; set the auto completion
 (add-to-list 'load-path "~/.emacs.d/elpa/popup/")
@@ -102,10 +103,11 @@
 (ac-config-default)
 
 ;; set highlight indentation
-(add-to-list 'load-path "~/.emacs.d/highlight-indentation/")
+(add-to-list 'load-path "~/.emacs.d/elpa/highlight-indentation/")
 (require 'highlight-indentation)
 (set-face-background 'highlight-indentation-face "#465457")
 (set-face-background 'highlight-indentation-current-column-face "#465457")
+(highlight-indentation-mode t)
 
 ;; set the indentation to two spaces for java mode
 (add-hook 'java-mode-hook (lambda () (setq c-basic-offset 2)))
@@ -113,27 +115,31 @@
 ;; scroll smoothly
 (setq scroll-step 1 scroll-conservatively 10000)
 
-;; highlight todos
-(defun hilite-todos()
-  (interactive)
-  (highlight-lines-matching-regexp
-   "\\<\\(FIXME\\|WRITEME\\|WRITEME!\\|TODO\\|BUG\\):?" 'hi-red-b)
-  )
+;; include melpa packages
+(when (>= emacs-major-version 24)
+  (require 'package)
+  (add-to-list
+   'package-archives
+   '("melpa" . "http://melpa.org/packages/")
+   t)
+  (package-initialize))
 
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- '(ansi-color-names-vector [
-                            "dark gray"
-                            "red"
-                            "green"
-                            "yellow"
-                            "deep sky blue"
-                            "magenta"
-                            "cyan"
-                            "white"])
+ '(ansi-color-names-vector
+   [
+    "dark gray"
+    "red" "green"
+    "yellow"
+    "deep sky blue"
+    "magenta"
+    "cyan"
+    "white"
+    ]
+   )
  '(column-number-mode t)
  '(font-use-system-font t)
  '(haskell-mode-hook (quote (turn-on-haskell-indent)))
@@ -158,17 +164,7 @@
                         :slant normal
                         :weight normal
                         :height 128
-                        :width normal)))))
-
-(custom-set-variables
- ;; custom-set-variables was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- '(inhibit-startup-screen t))
-(custom-set-faces
- ;; custom-set-faces was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
+                        :width normal)
+               ))
+    )
  )
