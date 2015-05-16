@@ -16,24 +16,45 @@
 (global-auto-revert-mode t)
 (setq-default indent-tabs-mode nil)
 
-;; turn off shell command echo
-(defun my-comint-init ()
-  (setq comint-process-echoes t))
-(add-hook 'shell-mode-hook 'my-comint-init)
+;; scroll smoothly
+(setq scroll-step 1 scroll-conservatively 10000)
 
-;; set the color theme
-(add-to-list 'load-path "~/.emacs.d/elpa/color-theme/")
-(require 'color-theme)
-(setq color-theme-is-global t)
-(load "~/.emacs.d/elpa/color-theme/themes/color-theme-molokai.el")
-(color-theme-molokai)
+;; set the indentation to two spaces for java mode
+(add-hook 'java-mode-hook (lambda () (setq c-basic-offset 2)))
 
+;; treat cli and ui differently
 (when window-system
   ;; (set-frame-parameter (selected-frame) 'alpha '(100 100))
   ;; (add-to-list 'default-frame-alist '(alpha 100 100))
   (server-start)
   (desktop-save-mode 1)
   )
+
+;; include melpa packages
+(when (>= emacs-major-version 24)
+  (require 'package)
+  (add-to-list
+   'package-archives
+   '("melpa" . "http://melpa.org/packages/")
+   t)
+  (package-initialize))
+
+;; turn off shell command echo
+(defun my-comint-init ()
+  (setq comint-process-echoes t))
+(add-hook 'shell-mode-hook 'my-comint-init)
+
+;; set the mouse scroll
+(defun smooth-scroll (increment)
+  (scroll-up increment) (sit-for 0.05)
+  (scroll-up increment) (sit-for 0.02)
+  (scroll-up increment) (sit-for 0.02)
+  (scroll-up increment) (sit-for 0.05)
+  (scroll-up increment) (sit-for 0.06)
+  (scroll-up increment))
+
+;; set the color theme
+(load-theme 'monokai t)
 
 ;; LaTeX settings
 (mapc (lambda (mode)
@@ -64,15 +85,6 @@
 
 (add-hook 'doc-view-mode-hook 'auto-revert-mode)
 
-;; set the mouse scroll
-(defun smooth-scroll (increment)
-  (scroll-up increment) (sit-for 0.05)
-  (scroll-up increment) (sit-for 0.02)
-  (scroll-up increment) (sit-for 0.02)
-  (scroll-up increment) (sit-for 0.05)
-  (scroll-up increment) (sit-for 0.06)
-  (scroll-up increment))
-
 ;; set ido to help choose files
 (require 'ido)
 (setq ido-enable-flex-matching t)
@@ -80,7 +92,6 @@
 (ido-mode 1)
 
 ;; an advanced "ido" to help choose functions
-(add-to-list 'load-path "~/.emacs.d/elpa/smex")
 (require 'smex)
 (smex-initialize)
 (global-set-key (kbd "M-x") 'smex)
@@ -88,41 +99,27 @@
 (global-set-key (kbd "C-c C-c M-x") 'execute-extended-command)
 
 ;; ;; set emacs-git plugin
-;; (add-to-list 'load-path "~/.emacs.d/elpa/magit/")
-;; (add-to-list 'load-path "~/.emacs.d/elpa/git-commit-mode-20131124.2132/")
-;; (add-to-list 'load-path "~/.emacs.d/elpa/git-rebase-mode-20131005.1730/")
-;; (require 'magit)
+(require 'magit)
 
 ;; set the auto completion
-(add-to-list 'load-path "~/.emacs.d/elpa/popup/")
 (require 'popup)
-(add-to-list 'load-path "~/.emacs.d/elpa/auto-complete/")
 (require 'auto-complete-config)
 (add-to-list 'ac-dictionary-directories
              "~/.emacs.d/elpa/auto-complete/dict")
 (ac-config-default)
 
 ;; set highlight indentation
-(add-to-list 'load-path "~/.emacs.d/elpa/highlight-indentation/")
 (require 'highlight-indentation)
 (set-face-background 'highlight-indentation-face "#465457")
 (set-face-background 'highlight-indentation-current-column-face "#465457")
 (highlight-indentation-mode t)
 
-;; set the indentation to two spaces for java mode
-(add-hook 'java-mode-hook (lambda () (setq c-basic-offset 2)))
+;; highlight weird whitespaces
+(require 'whitespace)
+(setq whitespace-style '(face empty tabs lines-tail trailing))
+(global-whitespace-mode t)
 
-;; scroll smoothly
-(setq scroll-step 1 scroll-conservatively 10000)
-
-;; include melpa packages
-(when (>= emacs-major-version 24)
-  (require 'package)
-  (add-to-list
-   'package-archives
-   '("melpa" . "http://melpa.org/packages/")
-   t)
-  (package-initialize))
+(require 'helm-config)
 
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
@@ -148,10 +145,6 @@
  '(show-paren-mode t)
  '(tool-bar-mode nil)
  '(uniquify-buffer-name-style (quote forward) nil (uniquify)))
-
-(require 'whitespace)
-(setq whitespace-style '(face empty tabs lines-tail trailing))
-(global-whitespace-mode t)
 
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
