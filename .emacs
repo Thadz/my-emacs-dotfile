@@ -100,6 +100,8 @@
 
 ;; ;; set emacs-git plugin
 (require 'magit)
+(setq magit-auto-revert-mode nil)
+(setq magit-last-seen-setup-instructions "1.4.0")
 
 ;; set the auto completion
 (require 'popup)
@@ -112,14 +114,21 @@
 (require 'highlight-indentation)
 (set-face-background 'highlight-indentation-face "#465457")
 (set-face-background 'highlight-indentation-current-column-face "#465457")
-(highlight-indentation-mode t)
+(define-globalized-minor-mode global-highlight-indentation-mode
+  highlight-indentation-mode highlight-indentation-mode)
+(global-highlight-indentation-mode)
 
 ;; highlight weird whitespaces
 (require 'whitespace)
 (setq whitespace-style '(face empty tabs lines-tail trailing))
 (global-whitespace-mode t)
 
+;; helm, the anything in emacs
 (require 'helm-config)
+
+;; set up haskell mode
+(add-hook 'haskell-mode-hook 'turn-on-haskell-doc-mode)
+(add-hook 'haskell-mode-hook 'turn-on-haskell-indent)
 
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
