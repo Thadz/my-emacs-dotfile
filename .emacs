@@ -20,7 +20,7 @@
 (setq scroll-step 1 scroll-conservatively 10000)
 
 ;; set the indentation to two spaces for java mode
-(add-hook 'java-mode-hook (lambda () (setq c-basic-offset 2)))
+(add-hook 'java-mode-hook (lambda () (setq c-basic-offset 4)))
 
 ;; treat cli and ui differently
 (when window-system
