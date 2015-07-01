@@ -177,18 +177,25 @@
  '(uniquify-buffer-name-style (quote forward) nil (uniquify))
  )
 
+(defun font-exists-p (font)
+  "check if font exists"
+  (if (null (x-list-fonts font)) nil t)
+)
+
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- '(default ((t (
-                :family "Ubuntu Mono"
-                        :foundry "unknown"
-                        :slant normal
-                        :weight normal
-                        :height 128
-                        :width normal)
+ (if (font-exists-p "Ubuntu Mono")
+     '(default ((t (
+                    :family "Ubuntu Mono"
+                            :foundry "unknown"
+                            :slant normal
+                            :weight normal
+                            :height 128
+                            :width normal)
                ))
-    )
+      )
  )
+)
